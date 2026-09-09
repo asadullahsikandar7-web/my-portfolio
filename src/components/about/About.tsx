@@ -27,33 +27,41 @@ export function About() {
             initial="hidden"
             whileInView="visible"
             viewport={viewportOnce}
-            className="space-y-5 text-base leading-relaxed text-text-muted sm:text-lg"
+            className="space-y-4 text-base leading-relaxed text-text-muted sm:text-lg"
           >
-            <motion.p variants={fadeUp}>
-              I'm studying Artificial Intelligence at the university level, but most
-              of what I know didn't come from a lecture slide — it came from
-              building things that had to actually work: a platform for managing
-              an institute, an agent that tests software the way a QA engineer
-              would, a system for tracking classroom attendance.
-            </motion.p>
-            <motion.p variants={fadeUp}>
-              My work sits at the intersection of four things I keep coming back
-              to: artificial intelligence, full-stack engineering, software
-              quality assurance, and product thinking. I'm drawn to the point
-              where a model or an idea stops being theoretical and has to survive
-              contact with real users, real data, and real edge cases.
-            </motion.p>
-            <motion.p variants={fadeUp}>
-              I don't present this as a finished résumé of achievements — it's an
-              evolving engineering career, still early, still being built in
-              public. What follows is the honest version of that journey.
-            </motion.p>
+            <div className="glass-panel story-panel p-5 sm:p-6">
+              <motion.p variants={fadeUp}>
+                I'm studying Artificial Intelligence at the university level, but most
+                of what I know didn't come from a lecture slide — it came from
+                building things that had to actually work: a platform for managing
+                an institute, an agent that tests software the way a QA engineer
+                would, a system for tracking classroom attendance.
+              </motion.p>
+            </div>
 
-            <motion.div variants={fadeUp} className="grid grid-cols-1 gap-3 pt-4 sm:grid-cols-2">
+            <div className="glass-panel story-panel p-5 sm:p-6">
+              <motion.p variants={fadeUp}>
+                My work sits at the intersection of four things I keep coming back
+                to: artificial intelligence, full-stack engineering, software
+                quality assurance, and product thinking. I'm drawn to the point
+                where a model or an idea stops being theoretical and has to survive
+                contact with real users, real data, and real edge cases.
+              </motion.p>
+            </div>
+
+            <div className="glass-panel story-panel p-5 sm:p-6">
+              <motion.p variants={fadeUp}>
+                I don't present this as a finished résumé of achievements — it's an
+                evolving engineering career, still early, still being built in
+                public. What follows is the honest version of that journey.
+              </motion.p>
+            </div>
+
+            <motion.div variants={fadeUp} className="grid grid-cols-1 gap-3 pt-2 sm:grid-cols-2">
               {IDENTITY.map(({ icon: Icon, label }) => (
                 <div
                   key={label}
-                  className="flex items-center gap-3 rounded-xl border border-border bg-surface/50 px-4 py-3"
+                  className="glass-panel flex items-center gap-3 rounded-2xl px-4 py-3"
                 >
                   <Icon size={16} className="shrink-0 text-accent" />
                   <span className="text-sm text-text">{label}</span>
@@ -67,7 +75,7 @@ export function About() {
             initial="hidden"
             whileInView="visible"
             viewport={viewportOnce}
-            className="portrait-scene lg:sticky lg:top-28 lg:self-start"
+            className="story-viewport lg:sticky lg:top-28 lg:self-start"
           >
             <motion.div
               className="portrait-card"
@@ -107,8 +115,8 @@ export function About() {
               </div>
             </motion.div>
 
-            <div className="mt-4 border-t border-border px-2 pt-5">
-              <p className="font-mono text-xs uppercase tracking-[0.25em] text-text-faint">
+            <div className="mt-4 glass-panel px-3 py-4 text-center">
+              <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-text-faint">
                 Learn → Build → Test → Improve → Ship
               </p>
             </div>

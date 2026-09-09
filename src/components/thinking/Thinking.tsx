@@ -25,7 +25,9 @@ export function Thinking() {
             <motion.div
               key={entry.title}
               variants={fadeUp}
-              className="flex items-center justify-between gap-4 rounded-xl border border-dashed border-border-strong bg-surface/30 px-5 py-4"
+              whileHover={{ y: -4, rotateX: 2, rotateY: -2 }}
+              transition={{ type: "spring", stiffness: 180, damping: 18 }}
+              className="glass-panel flex items-center justify-between gap-4 rounded-[22px] px-5 py-4"
             >
               <div>
                 <p className="font-mono text-[11px] uppercase tracking-wider text-text-faint">

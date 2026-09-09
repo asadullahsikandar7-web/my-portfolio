@@ -68,55 +68,65 @@ export function Hero() {
             </span>
           </motion.div>
 
-          <h1 className="text-balance text-4xl font-medium leading-[1.08] tracking-tight text-text sm:text-5xl lg:text-6xl">
-            <LineReveal delay={0.1}>
-              Building <span className="text-gradient">Intelligence.</span>
-            </LineReveal>
-            <LineReveal delay={0.22}>
-              Turning Ideas Into <span className="text-gradient">Reality.</span>
-            </LineReveal>
-          </h1>
+          <div className="glass-panel hero-copy-panel p-3 sm:p-5">
+            <h1 className="text-balance text-4xl font-medium leading-[1.08] tracking-tight text-text sm:text-5xl lg:text-6xl">
+              <LineReveal delay={0.1}>
+                Building <span className="text-gradient">Intelligence.</span>
+              </LineReveal>
+              <LineReveal delay={0.22}>
+                Turning Ideas Into <span className="text-gradient">Reality.</span>
+              </LineReveal>
+            </h1>
 
-          <motion.p
-            variants={fadeUp}
-            className="mt-6 max-w-xl text-balance text-base leading-relaxed text-text-muted sm:text-lg"
-          >
-            I'm Asad Ullah Sikandar — a BS Artificial Intelligence student, developer,
-            and product builder exploring AI, full-stack engineering, software
-            quality assurance, automation, and intelligent systems.
-          </motion.p>
+            <motion.p
+              variants={fadeUp}
+              className="mt-6 max-w-xl text-balance text-base leading-relaxed text-text-muted sm:text-lg"
+            >
+              I'm Asad Ullah Sikandar — a BS Artificial Intelligence student, developer,
+              and product builder exploring AI, full-stack engineering, software
+              quality assurance, automation, and intelligent systems.
+            </motion.p>
 
-          <motion.div variants={fadeUp} className="mt-9 flex flex-wrap items-center gap-5">
-            <MagneticLink href="#work" variant="primary">
-              Explore My Work
-              <ArrowRight size={16} className="transition-transform duration-300 group-hover:translate-x-1" />
-            </MagneticLink>
-            <MagneticLink href="#contact" variant="secondary">
-              Let's Connect
-            </MagneticLink>
-          </motion.div>
+            <motion.div variants={fadeUp} className="mt-9 flex flex-wrap items-center gap-5">
+              <MagneticLink href="#work" variant="primary">
+                Explore My Work
+                <ArrowRight size={16} className="transition-transform duration-300 group-hover:translate-x-1" />
+              </MagneticLink>
+              <MagneticLink href="#contact" variant="secondary">
+                Let's Connect
+              </MagneticLink>
+            </motion.div>
 
-          <motion.div
-            variants={fadeUp}
-            className="mt-14 flex flex-wrap items-center gap-x-8 gap-y-3 font-mono text-xs uppercase tracking-wider text-text-faint"
-          >
-            <span>AI &amp; Data</span>
-            <span aria-hidden>·</span>
-            <span>Full-Stack</span>
-            <span aria-hidden>·</span>
-            <span>SQA &amp; Automation</span>
-          </motion.div>
+            <motion.div
+              variants={fadeUp}
+              className="mt-14 flex flex-wrap items-center gap-x-8 gap-y-3 font-mono text-xs uppercase tracking-wider text-text-faint"
+            >
+              <span>AI &amp; Data</span>
+              <span aria-hidden>·</span>
+              <span>Full-Stack</span>
+              <span aria-hidden>·</span>
+              <span>SQA &amp; Automation</span>
+            </motion.div>
+          </div>
         </motion.div>
 
         <motion.div
           initial={{ opacity: 0, scale: 0.94 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.9, delay: 0.3 }}
-          className="mx-auto w-full max-w-[280px] sm:max-w-sm lg:max-w-none"
+          className="hero-visual mx-auto w-full max-w-[300px] sm:max-w-sm lg:max-w-none"
         >
-          <CornerFrame scanline className="p-6">
-            <IntelligenceNetwork />
-          </CornerFrame>
+          <div className="glass-panel hero-visual-core p-3 sm:p-4">
+            <div className="hero-orbit hero-orbit-one" aria-hidden="true" />
+            <div className="hero-orbit hero-orbit-two" aria-hidden="true" />
+            <CornerFrame scanline className="p-6">
+              <IntelligenceNetwork />
+            </CornerFrame>
+            <div className="hero-float-panel">
+              <span className="hero-float-title">Signal</span>
+              <strong>AI Systems</strong>
+            </div>
+          </div>
         </motion.div>
       </Container>
 

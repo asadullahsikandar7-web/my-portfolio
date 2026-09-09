@@ -15,8 +15,11 @@ export function ProjectCard({ project, reverse = false }: { project: Project; re
       initial="hidden"
       whileInView="visible"
       viewport={viewportOnce}
+      whileHover={{ y: -6, rotateX: 1.2, rotateY: -1.2 }}
+      transition={{ type: "spring", stiffness: 150, damping: 18 }}
+      style={{ transformStyle: "preserve-3d" }}
     >
-      <GlowCard className="p-2">
+      <GlowCard className="p-2 shadow-[0_20px_70px_rgba(6,8,16,0.4)]">
         <div
           className={`grid gap-6 p-4 sm:p-6 lg:grid-cols-2 lg:gap-10 lg:p-8 ${
             reverse ? "lg:[&>*:first-child]:order-2" : ""

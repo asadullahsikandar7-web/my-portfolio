@@ -31,20 +31,24 @@ export function QualityEngineering() {
           initial="hidden"
           whileInView="visible"
           viewport={viewportOnce}
-          className="mt-14 flex flex-wrap items-center justify-center gap-2 sm:gap-3"
+          className="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-3"
         >
           {PIPELINE.map((step, i) => (
-            <div key={step} className="flex items-center gap-2 sm:gap-3">
-              <motion.div
-                variants={fadeUp}
-                className="rounded-full border border-border-strong bg-surface px-5 py-2.5 text-sm font-medium text-text"
-              >
-                {step}
-              </motion.div>
-              {i < PIPELINE.length - 1 && (
+            <motion.div
+              key={step}
+              variants={fadeUp}
+              whileHover={{ y: -5, rotateX: 4, rotateY: -4 }}
+              transition={{ type: "spring", stiffness: 180, damping: 18 }}
+              className="glass-panel story-step-card p-5"
+            >
+              <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-text-faint">
+                {String(i + 1).padStart(2, "0")}
+              </p>
+              <div className="mt-4 flex items-center justify-between gap-3">
+                <span className="text-lg font-medium text-text">{step}</span>
                 <ArrowRight size={16} className="shrink-0 text-text-faint" />
-              )}
-            </div>
+              </div>
+            </motion.div>
           ))}
         </motion.div>
 
@@ -71,7 +75,7 @@ export function QualityEngineering() {
           initial="hidden"
           whileInView="visible"
           viewport={viewportOnce}
-          className="mx-auto mt-14 max-w-xl rounded-2xl border border-border bg-surface/50 p-6 text-center sm:p-8"
+          className="glass-panel mx-auto mt-14 max-w-xl rounded-[28px] p-6 text-center sm:p-8"
         >
           <p className="text-sm text-text-muted sm:text-base">
             This mindset is exactly what I'm building into{" "}
