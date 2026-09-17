@@ -2,12 +2,10 @@ import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { Hero } from "../components/hero/Hero";
 import { About } from "../components/about/About";
-import { Journey } from "../components/journey/Journey";
-import { Skills } from "../components/skills/Skills";
+import { Services } from "../components/services/Services";
 import { Projects } from "../components/projects/Projects";
-import { QualityEngineering } from "../components/quality/QualityEngineering";
-import { CurrentlyBuilding } from "../components/building/CurrentlyBuilding";
-import { GithubStats } from "../components/github/GithubStats";
+import { Skills } from "../components/skills/Skills";
+import { Journey } from "../components/journey/Journey";
 import { Thinking } from "../components/thinking/Thinking";
 import { Contact } from "../components/contact/Contact";
 
@@ -27,12 +25,10 @@ export function Home() {
     <>
       <Hero />
       <About />
-      <Journey />
-      <Skills />
+      <Services />
       <Projects />
-      <QualityEngineering />
-      <CurrentlyBuilding />
-      <GithubStats />
+      <Skills />
+      <Journey />
       <Thinking />
       <Contact />
     </>

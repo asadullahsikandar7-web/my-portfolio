@@ -1,10 +1,8 @@
 import { useState } from "react";
-import { motion } from "framer-motion";
-import { Container } from "../ui/Container";
-import { SectionHeading } from "../ui/SectionHeading";
-import { fadeUp, staggerContainer, viewportOnce } from "../../lib/motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { skillGroups, type Skill } from "../../data/skills";
 import { projects } from "../../data/projects";
+import { LetterPullUp, GsapScrollCard } from "../ui/MagicText";
 
 function projectTitles(usedIn: string[]): string {
   return usedIn
@@ -26,65 +24,72 @@ function SkillPill({ skill }: { skill: Skill }) {
         onMouseLeave={() => setOpen(false)}
         onFocus={() => hasUsage && setOpen(true)}
         onBlur={() => setOpen(false)}
-        aria-label={hasUsage ? `${skill.name} — used in ${titles}` : skill.name}
-        className="rounded-full border border-border bg-surface px-4 py-2 text-sm text-text-muted transition-colors duration-200 hover:border-border-strong hover:text-text"
+        className="px-3.5 py-1.5 rounded-full text-xs font-semibold bg-[#F5EFEB] text-[#222222] border border-black/[0.04] hover:bg-[#FF6400] hover:text-white hover:border-[#FF6400] transition-all duration-200 cursor-pointer shadow-2xs"
       >
         {skill.name}
       </button>
 
-      {hasUsage && open && (
-        <motion.div
-          initial={{ opacity: 0, y: 4 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.15 }}
-          role="tooltip"
-          className="pointer-events-none absolute left-1/2 top-full z-20 mt-2 w-max max-w-[220px] -translate-x-1/2 rounded-lg border border-border-strong bg-bg-elevated px-3 py-2 text-center font-mono text-[11px] text-text-muted shadow-xl"
-        >
-          Used in: <span className="text-text">{titles}</span>
-        </motion.div>
-      )}
+      <AnimatePresence>
+        {hasUsage && open && (
+          <motion.div
+            initial={{ opacity: 0, y: 6 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 6 }}
+            transition={{ duration: 0.15 }}
+            role="tooltip"
+            className="pointer-events-none absolute left-1/2 bottom-full z-30 mb-2 w-max max-w-[240px] -translate-x-1/2 rounded-lg bg-[#141414] px-3 py-1.5 text-center text-xs text-white shadow-xl"
+          >
+            <div className="text-[10px] text-[#A0A2AB] uppercase font-bold tracking-wider mb-0.5">
+              Used in
+            </div>
+            <span className="font-semibold text-white">{titles}</span>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
 
 export function Skills() {
   return (
-    <section id="skills" className="scroll-mt-24 py-24 sm:py-32">
-      <Container>
-        <SectionHeading
-          eyebrow="Technology"
-          title="Tools I actually reach for."
-          description="Grouped by where they show up in real work, not a logo wall. Hover a skill to see which project it's used in."
-        />
+    <section id="skills" className="py-24 sm:py-32 bg-[#F5EFEB] scroll-mt-20">
+      <div className="max-w-7xl mx-auto px-6 sm:px-8">
+        <div className="text-center max-w-2xl mx-auto mb-16">
+          <span className="text-xs sm:text-sm font-bold tracking-[0.25em] text-[#FF6400] uppercase mb-2 block">
+            TECH STACK &amp; CAPABILITIES
+          </span>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-[#121212] tracking-tight uppercase font-display mb-4">
+            <LetterPullUp words="Technologies I Build With" delay={0.03} />
+          </h2>
+          <p className="text-sm sm:text-base text-[#666666] leading-relaxed">
+            Hands-on technical stack across artificial intelligence, frontend, backend, database
+            architecture, and automated testing.
+          </p>
+        </div>
 
-        <div className="mt-14 grid gap-x-10 gap-y-12 sm:grid-cols-2">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
           {skillGroups.map((group, i) => (
-            <motion.div
-              key={group.id}
-              variants={fadeUp}
-              initial="hidden"
-              whileInView="visible"
-              viewport={viewportOnce}
-              transition={{ delay: i * 0.04 }}
-            >
-              <h3 className="mb-4 font-mono text-xs uppercase tracking-[0.16em] text-text-faint">
-                {group.title}
-              </h3>
-              <motion.div
-                variants={staggerContainer(0.03)}
-                initial="hidden"
-                whileInView="visible"
-                viewport={viewportOnce}
-                className="flex flex-wrap gap-2"
-              >
-                {group.skills.map((skill) => (
-                  <SkillPill key={skill.name} skill={skill} />
-                ))}
-              </motion.div>
-            </motion.div>
+            <GsapScrollCard key={group.id} delay={i * 0.08}>
+              <div className="bg-white rounded-[24px] p-6 sm:p-8 border border-black/[0.06] shadow-[0_8px_30px_-10px_rgba(0,0,0,0.04)] hover:shadow-[0_16px_40px_-12px_rgba(0,0,0,0.08)] transition-all duration-300 h-full flex flex-col justify-between">
+                <div>
+                  <div className="flex items-center gap-2 mb-4">
+                    <span className="w-2 h-2 rounded-full bg-[#FF6400]" />
+                    <h3 className="font-bold text-base text-[#121212] font-display uppercase tracking-wider">
+                      {group.title}
+                    </h3>
+                  </div>
+
+                  <div className="flex flex-wrap gap-2 mt-4">
+                    {group.skills.map((skill) => (
+                      <SkillPill key={skill.name} skill={skill} />
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </GsapScrollCard>
           ))}
         </div>
-      </Container>
+      </div>
     </section>
   );
 }

@@ -1,49 +1,52 @@
-import { motion } from "framer-motion";
-import { Container } from "../ui/Container";
-import { SectionHeading } from "../ui/SectionHeading";
-import { fadeUp, staggerContainer, viewportOnce } from "../../lib/motion";
+import { ArrowUpRight } from "lucide-react";
 import { thinkingEntries } from "../../data/thinking";
+import { GsapScrollCard, LetterPullUp } from "../ui/MagicText";
 
 export function Thinking() {
   return (
-    <section id="thinking" className="scroll-mt-24 py-24 sm:py-32">
-      <Container>
-        <SectionHeading
-          eyebrow="Thinking in Public"
-          title="Writing about what I'm actually learning."
-          description="Nothing published yet — these are the topics queued up next. Shown honestly as upcoming, not backdated to look like a finished archive."
-        />
+    <section id="thinking" className="py-24 sm:py-32 bg-[#F5EFEB] scroll-mt-20">
+      <div className="max-w-6xl mx-auto px-6 sm:px-8">
+        {/* Section Header */}
+        <div className="text-center max-w-2xl mx-auto mb-16">
+          <span className="text-xs sm:text-sm font-bold tracking-[0.25em] text-[#FF6400] uppercase mb-2 block">
+            ARTICLES &amp; THOUGHTS
+          </span>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-[#121212] tracking-tight uppercase font-display mb-4">
+            <LetterPullUp words="Thinking In Public" delay={0.03} />
+          </h2>
+          <p className="text-sm sm:text-base text-[#666666] leading-relaxed">
+            Writing about AI engineering, real-world software quality, and building products.
+          </p>
+        </div>
 
-        <motion.div
-          variants={staggerContainer(0.06)}
-          initial="hidden"
-          whileInView="visible"
-          viewport={viewportOnce}
-          className="mt-14 grid gap-4 sm:grid-cols-2"
-        >
-          {thinkingEntries.map((entry) => (
-            <motion.div
-              key={entry.title}
-              variants={fadeUp}
-              whileHover={{ y: -4, rotateX: 2, rotateY: -2 }}
-              transition={{ type: "spring", stiffness: 180, damping: 18 }}
-              className="glass-panel flex items-center justify-between gap-4 rounded-[22px] px-5 py-4"
-            >
-              <div>
-                <p className="font-mono text-[11px] uppercase tracking-wider text-text-faint">
-                  {entry.topic}
-                </p>
-                <p className="mt-1 text-sm font-medium text-text sm:text-base">{entry.title}</p>
+        {/* Thinking Cards Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {thinkingEntries.map((entry, index) => (
+            <GsapScrollCard key={entry.title} delay={index * 0.08}>
+              <div className="bg-white rounded-[24px] p-6 sm:p-7 border border-black/[0.06] shadow-[0_8px_30px_-10px_rgba(0,0,0,0.04)] hover:shadow-[0_16px_40px_-12px_rgba(0,0,0,0.08)] hover:-translate-y-1 transition-all duration-300 flex items-center justify-between gap-4 group">
+                <div>
+                  <span className="inline-block px-2.5 py-0.5 rounded-full bg-[#FFF0E6] text-[#FF6400] text-[11px] font-bold uppercase tracking-wider mb-2">
+                    {entry.topic}
+                  </span>
+                  <h3 className="text-base sm:text-lg font-bold text-[#121212] font-display group-hover:text-[#FF6400] transition-colors">
+                    {entry.title}
+                  </h3>
+                </div>
+
+                {entry.comingSoon ? (
+                  <span className="shrink-0 px-3 py-1 rounded-full bg-[#F5EFEB] text-[#777777] text-xs font-semibold">
+                    Coming Soon
+                  </span>
+                ) : (
+                  <div className="w-9 h-9 rounded-full bg-[#121212] text-white flex items-center justify-center shrink-0 group-hover:bg-[#FF6400] transition-colors">
+                    <ArrowUpRight size={16} />
+                  </div>
+                )}
               </div>
-              {entry.comingSoon && (
-                <span className="shrink-0 rounded-full bg-bg-elevated px-3 py-1 font-mono text-[10px] uppercase tracking-wider text-text-faint">
-                  Coming Soon
-                </span>
-              )}
-            </motion.div>
+            </GsapScrollCard>
           ))}
-        </motion.div>
-      </Container>
+        </div>
+      </div>
     </section>
   );
 }

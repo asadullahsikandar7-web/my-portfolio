@@ -1,208 +1,141 @@
 import { useEffect, useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
-import { AnimatePresence, motion } from "framer-motion";
-import { Moon, Sun } from "lucide-react";
-import { useTheme } from "../../hooks/useTheme";
-import { useActiveSection } from "../../hooks/useActiveSection";
-import { Button } from "../ui/Button";
+import { Link } from "react-router-dom";
+import { Menu, X, ChevronDown, Download } from "lucide-react";
+import { getLenis } from "../../lib/lenis";
+import { social } from "../../data/social";
 
 const NAV_LINKS = [
-  { label: "Home", href: "#home" },
-  { label: "About", href: "#about" },
-  { label: "Work", href: "#work" },
-  { label: "Journey", href: "#journey" },
-  { label: "Thinking", href: "#thinking" },
-  { label: "Contact", href: "#contact" },
+  { label: "HOME", href: "#home", hasDropdown: false },
+  { label: "ABOUT ME", href: "#about", hasDropdown: false },
+  { label: "SERVICES", href: "#services", hasDropdown: false },
+  { label: "PROJECTS", href: "#projects", hasDropdown: false },
+  { label: "JOURNEY", href: "#journey", hasDropdown: false },
+  { label: "CONTACT", href: "#contact", hasDropdown: false },
 ];
-
-const SECTION_IDS = NAV_LINKS.map((l) => l.href.replace("#", ""));
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
-  const [open, setOpen] = useState(false);
-  const { theme, toggleTheme } = useTheme();
-  const location = useLocation();
-  const navigate = useNavigate();
-  const activeSection = useActiveSection(location.pathname === "/" ? SECTION_IDS : []);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 24);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20);
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  useEffect(() => {
-    document.body.style.overflow = open ? "hidden" : "";
-    return () => {
-      document.body.style.overflow = "";
-    };
-  }, [open]);
-
-  useEffect(() => {
-    if (!open) return;
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setOpen(false);
-    };
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, [open]);
-
-  function handleNav(href: string) {
-    setOpen(false);
-    if (location.pathname !== "/") {
-      navigate(`/${href}`);
-      return;
+  const handleScrollTo = (e: React.MouseEvent, href: string) => {
+    e.preventDefault();
+    setMobileMenuOpen(false);
+    const lenis = getLenis();
+    const target = document.querySelector(href);
+    if (target) {
+      if (lenis) {
+        lenis.scrollTo(target as HTMLElement, { offset: -30, duration: 1.2 });
+      } else {
+        target.scrollIntoView({ behavior: "smooth" });
+      }
     }
-    const id = href.replace("#", "");
-    if (id === "home") {
-      window.scrollTo({ top: 0, behavior: "smooth" });
-      return;
-    }
-    document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
-  }
+  };
 
   return (
     <header
-      className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
-        scrolled ? "py-3" : "py-6"
+      className={`fixed top-0 inset-x-0 z-50 transition-all duration-300 ${
+        scrolled
+          ? "bg-[#F5EFEB]/90 backdrop-blur-md py-3 shadow-[0_4px_24px_rgba(0,0,0,0.04)] border-b border-black/[0.04]"
+          : "bg-transparent py-5"
       }`}
     >
-      <div className="relative z-50 mx-auto flex w-full max-w-6xl items-center justify-between px-6 sm:px-8 lg:px-10">
-        <div
-          className={`flex w-full items-center justify-between rounded-full border transition-all duration-300 ${
-            scrolled
-              ? "border-border bg-bg-elevated/80 px-4 py-2 shadow-lg shadow-black/5 backdrop-blur-lg"
-              : "border-transparent bg-transparent px-2 py-2"
-          }`}
+      <div className="max-w-7xl mx-auto px-6 sm:px-8 flex items-center justify-between">
+        {/* Brand Logo */}
+        <Link
+          to="/"
+          onClick={(e) => handleScrollTo(e, "#home")}
+          className="flex items-center gap-2.5 group"
         >
-          <Link
-            to="/"
-            onClick={() => handleNav("#home")}
-            className="font-mono text-sm font-semibold tracking-tight text-text"
-          >
-            AUS<span className="text-accent">.</span>
-          </Link>
-
-          <nav className="hidden items-center gap-1 md:flex" aria-label="Primary">
-            {NAV_LINKS.slice(1).map((link, i) => {
-              const id = link.href.replace("#", "");
-              const isActive = activeSection === id;
-              return (
-                <button
-                  key={link.href}
-                  onClick={() => handleNav(link.href)}
-                  aria-current={isActive ? "true" : undefined}
-                  className={`relative flex items-center gap-1.5 px-4 py-2 text-sm transition-colors ${
-                    isActive ? "text-text" : "text-text-muted hover:text-text"
-                  }`}
-                >
-                  <span
-                    className={`font-mono text-[10px] transition-opacity duration-200 ${
-                      isActive ? "text-accent opacity-100" : "opacity-0"
-                    }`}
-                  >
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
-                  {link.label}
-                  {isActive && (
-                    <motion.span
-                      layoutId="nav-active-underline"
-                      className="absolute inset-x-4 -bottom-px h-px bg-accent"
-                      transition={{ type: "spring", stiffness: 400, damping: 32 }}
-                    />
-                  )}
-                </button>
-              );
-            })}
-          </nav>
-
-          <div className="flex items-center gap-2">
-            <button
-              onClick={toggleTheme}
-              aria-label={theme === "dark" ? "Switch to light theme" : "Switch to dark theme"}
-              className="flex h-9 w-9 items-center justify-center rounded-full text-text-muted transition-colors hover:bg-surface hover:text-text"
-            >
-              {theme === "dark" ? <Sun size={16} /> : <Moon size={16} />}
-            </button>
-            <div className="hidden sm:block">
-              <Button onClick={() => handleNav("#contact")} className="text-xs">
-                Let's Connect
-              </Button>
-            </div>
-            <button
-              onClick={() => setOpen((v) => !v)}
-              aria-label={open ? "Close menu" : "Open menu"}
-              aria-expanded={open}
-              aria-controls="mobile-menu"
-              className="relative flex h-9 w-9 items-center justify-center rounded-full text-text transition-colors hover:bg-surface md:hidden"
-            >
-              <span className="relative block h-4 w-4">
-                <span
-                  className={`absolute left-0 top-1 block h-[1.5px] w-4 bg-current transition-all duration-300 ${
-                    open ? "top-[7px] rotate-45" : ""
-                  }`}
-                />
-                <span
-                  className={`absolute left-0 top-[7px] block h-[1.5px] w-4 bg-current transition-opacity duration-200 ${
-                    open ? "opacity-0" : "opacity-100"
-                  }`}
-                />
-                <span
-                  className={`absolute left-0 top-[13px] block h-[1.5px] w-4 bg-current transition-all duration-300 ${
-                    open ? "top-[7px] -rotate-45" : ""
-                  }`}
-                />
-              </span>
-            </button>
+          {/* Stylized geometric orange emblem matching template */}
+          <div className="w-8 h-8 grid grid-cols-2 gap-1 p-0.5 transition-transform duration-300 group-hover:rotate-45">
+            <span className="w-full h-full bg-[#FF6400] rounded-sm" />
+            <span className="w-full h-full bg-[#FF6400] rounded-full" />
+            <span className="w-full h-full bg-[#FF6400] rounded-full" />
+            <span className="w-full h-full bg-[#FF6400] rounded-sm" />
           </div>
+          <span className="text-xl font-extrabold tracking-tight text-[#121212] font-display">
+            Asadullah Sidandar
+          </span>
+        </Link>
+
+        {/* Center Desktop Navigation */}
+        <nav className="hidden md:flex items-center gap-8">
+          {NAV_LINKS.map((link) => (
+            <a
+              key={link.label}
+              href={link.href}
+              onClick={(e) => handleScrollTo(e, link.href)}
+              className="text-[13px] font-bold tracking-wider text-[#333333] hover:text-[#FF6400] transition-colors flex items-center gap-1 group py-1"
+            >
+              <span>{link.label}</span>
+              {link.hasDropdown && (
+                <ChevronDown
+                  size={13}
+                  className="transition-transform duration-200 group-hover:rotate-180 opacity-60"
+                />
+              )}
+            </a>
+          ))}
+        </nav>
+
+        {/* Right CTA Button */}
+        <div className="hidden md:flex items-center gap-4">
+          <a
+            href={social.resumeUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-full bg-[#121212] text-white text-[13px] font-bold tracking-wider uppercase hover:bg-[#FF6400] transition-colors duration-300 shadow-sm hover:shadow-md hover:shadow-orange-500/20 active:scale-95"
+          >
+            <Download size={14} className="stroke-[2.5]" />
+            DOWNLOAD CV
+          </a>
         </div>
+
+        {/* Mobile Hamburger Button */}
+        <button
+          type="button"
+          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          className="md:hidden p-2 text-[#121212] hover:text-[#FF6400] transition-colors"
+          aria-label="Toggle Navigation Menu"
+        >
+          {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+        </button>
       </div>
 
-      <AnimatePresence>
-        {open && (
-          <motion.div
-            id="mobile-menu"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.25 }}
-            className="fixed inset-0 z-40 bg-bg/98 backdrop-blur-xl md:hidden"
-          >
-            <nav
-              className="flex h-full flex-col items-start justify-center gap-2 px-10"
-              aria-label="Mobile"
+      {/* Mobile Drawer */}
+      {mobileMenuOpen && (
+        <div className="md:hidden fixed inset-x-0 top-[60px] bg-[#F5EFEB] border-b border-black/10 px-6 py-6 shadow-xl flex flex-col gap-4 animate-in fade-in slide-in-from-top-2">
+          {NAV_LINKS.map((link) => (
+            <a
+              key={link.label}
+              href={link.href}
+              onClick={(e) => handleScrollTo(e, link.href)}
+              className="text-base font-bold text-[#121212] hover:text-[#FF6400] transition-colors py-1.5"
             >
-              {NAV_LINKS.map((link, i) => {
-                const id = link.href.replace("#", "");
-                const isActive = activeSection === id;
-                return (
-                  <motion.button
-                    key={link.href}
-                    initial={{ opacity: 0, y: 16 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.08 + i * 0.05, duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-                    onClick={() => handleNav(link.href)}
-                    className={`text-4xl font-medium tracking-tight transition-colors ${
-                      isActive ? "text-accent" : "text-text hover:text-accent"
-                    }`}
-                  >
-                    {link.label}
-                  </motion.button>
-                );
-              })}
-              <motion.div
-                initial={{ opacity: 0, y: 16 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.08 + NAV_LINKS.length * 0.05, duration: 0.4 }}
-                className="mt-6"
-              >
-                <Button onClick={() => handleNav("#contact")}>Let's Connect</Button>
-              </motion.div>
-            </nav>
-          </motion.div>
-        )}
-      </AnimatePresence>
+              {link.label}
+            </a>
+          ))}
+          <div className="pt-3 border-t border-black/5">
+            <a
+              href={social.resumeUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-full inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-[#121212] text-white text-sm font-bold tracking-wider uppercase hover:bg-[#FF6400] transition-colors"
+            >
+              <Download size={15} />
+              DOWNLOAD CV
+            </a>
+          </div>
+        </div>
+      )}
     </header>
   );
 }

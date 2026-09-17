@@ -1,41 +1,73 @@
-import { Container } from "../ui/Container";
-import { SectionHeading } from "../ui/SectionHeading";
+import { useState } from "react";
 import { projects } from "../../data/projects";
 import { ProjectCard } from "./ProjectCard";
-import { CompactProjectCard } from "./CompactProjectCard";
+import { LetterPullUp } from "../ui/MagicText";
+
+const CATEGORIES = ["All", "AI & Data", "Full-Stack", "SQA & Automation"];
 
 export function Projects() {
-  const featured = projects.filter((p) => p.featured);
-  const supporting = projects.filter((p) => !p.featured);
+  const [selectedCategory, setSelectedCategory] = useState("All");
+
+  const filteredProjects = projects.filter((project) => {
+    if (selectedCategory === "All") return true;
+    if (selectedCategory === "AI & Data") {
+      return project.category.some((c) => ["AI", "Data", "Analytics", "Machine Learning"].includes(c));
+    }
+    if (selectedCategory === "Full-Stack") {
+      return project.category.some((c) => ["Full-Stack", "EdTech", "Web Development"].includes(c));
+    }
+    if (selectedCategory === "SQA & Automation") {
+      return project.category.some((c) => ["SQA", "Automation", "Intelligent Agents"].includes(c));
+    }
+    return true;
+  });
 
   return (
-    <section id="work" className="scroll-mt-24 py-24 sm:py-32">
-      <Container>
-        <SectionHeading
-          eyebrow="Selected Work"
-          title="Proof of work, not a portfolio of promises."
-          description="Real projects, presented with what they actually solve — the problem, the approach, and where each one stands today."
-        />
+    <section id="projects" className="py-24 sm:py-32 bg-[#F5EFEB] scroll-mt-20">
+      <div className="max-w-7xl mx-auto px-6 sm:px-8">
+        {/* Centered Section Heading matching template */}
+        <div className="text-center max-w-2xl mx-auto mb-16">
+          <span className="text-xs sm:text-sm font-bold tracking-[0.25em] text-[#FF6400] uppercase mb-2 block">
+            PORTFOLIO
+          </span>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-[#121212] tracking-tight uppercase font-display mb-4">
+            <LetterPullUp words="Featured Project" delay={0.03} />
+          </h2>
+          <p className="text-sm sm:text-base text-[#666666] leading-relaxed">
+            Real-world systems, intelligent platforms, and practical tools engineered with modern
+            technologies and rigorous quality standards.
+          </p>
 
-        <div className="mt-14 space-y-8">
-          {featured.map((project, i) => (
-            <ProjectCard key={project.id} project={project} reverse={i % 2 === 1} />
-          ))}
+          {/* Filter Pills */}
+          <div className="flex flex-wrap items-center justify-center gap-2 mt-8">
+            {CATEGORIES.map((category) => (
+              <button
+                key={category}
+                type="button"
+                onClick={() => setSelectedCategory(category)}
+                className={`px-4 py-1.5 rounded-full text-xs font-bold transition-all duration-200 cursor-pointer ${
+                  selectedCategory === category
+                    ? "bg-[#121212] text-white shadow-sm"
+                    : "bg-white/80 text-[#555555] hover:bg-white hover:text-[#121212] border border-black/[0.04]"
+                }`}
+              >
+                {category}
+              </button>
+            ))}
+          </div>
         </div>
 
-        {supporting.length > 0 && (
-          <div className="mt-16">
-            <p className="mb-6 font-mono text-xs uppercase tracking-[0.16em] text-text-faint">
-              Supporting Projects
-            </p>
-            <div className="grid gap-6 sm:grid-cols-2">
-              {supporting.map((project) => (
-                <CompactProjectCard key={project.id} project={project} />
-              ))}
-            </div>
-          </div>
-        )}
-      </Container>
+        {/* Project Cards Stack */}
+        <div className="space-y-10 sm:space-y-12">
+          {filteredProjects.map((project, index) => (
+            <ProjectCard
+              key={project.id}
+              project={project}
+              reverse={index % 2 === 1}
+            />
+          ))}
+        </div>
+      </div>
     </section>
   );
 }
