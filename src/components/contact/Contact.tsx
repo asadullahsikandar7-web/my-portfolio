@@ -36,7 +36,8 @@ export function Contact() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
           {/* Left Column: Heading & Contact Info */}
           <div className="lg:col-span-5">
-            <span className="text-xs sm:text-sm font-bold tracking-[0.25em] text-[#FF6400] uppercase mb-3 block">
+            <span className="inline-flex items-center gap-2 text-xs sm:text-sm font-bold tracking-[0.25em] text-[#FF6400] uppercase mb-3">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#FF6400] animate-pulse" />
               GET IN TOUCH
             </span>
             <h2 className="text-4xl sm:text-5xl font-extrabold text-white tracking-tight uppercase font-display leading-[1.05] mb-6">
@@ -160,7 +161,7 @@ export function Contact() {
 
                     <button
                       type="submit"
-                      className="w-full py-4 rounded-xl bg-[#FF6400] text-white text-sm font-bold uppercase tracking-wider hover:bg-[#E55A00] transition-colors duration-200 flex items-center justify-center gap-2 shadow-lg shadow-orange-600/20 active:scale-[0.99] cursor-pointer"
+                      className="btn-shine w-full py-4 rounded-xl bg-[#FF6400] text-white text-sm font-bold uppercase tracking-wider hover:bg-[#E55A00] transition-colors duration-200 flex items-center justify-center gap-2 shadow-lg shadow-orange-600/20 active:scale-[0.99] cursor-pointer"
                     >
                       <span>Send Message</span>
                       <Send size={15} />

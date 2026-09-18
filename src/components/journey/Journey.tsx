@@ -3,11 +3,13 @@ import { GsapScrollCard, LetterPullUp } from "../ui/MagicText";
 
 export function Journey() {
   return (
-    <section id="journey" className="py-24 sm:py-32 bg-[#F5EFEB] scroll-mt-20">
-      <div className="max-w-5xl mx-auto px-6 sm:px-8">
+    <section id="journey" className="relative py-24 sm:py-32 bg-[#F5EFEB] scroll-mt-20 overflow-hidden">
+      <div className="absolute top-0 left-0 -translate-x-1/3 -translate-y-1/4 w-[500px] h-[500px] bg-[#FF6400]/[0.04] rounded-full blur-3xl pointer-events-none" />
+      <div className="max-w-5xl mx-auto px-6 sm:px-8 relative">
         {/* Section Header */}
         <div className="text-center max-w-2xl mx-auto mb-16">
-          <span className="text-xs sm:text-sm font-bold tracking-[0.25em] text-[#FF6400] uppercase mb-2 block">
+          <span className="inline-flex items-center gap-2 text-xs sm:text-sm font-bold tracking-[0.25em] text-[#FF6400] uppercase mb-2">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#FF6400] animate-pulse" />
             EXPERIENCE &amp; EDUCATION
           </span>
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-[#121212] tracking-tight uppercase font-display mb-4">
@@ -26,7 +28,7 @@ export function Journey() {
                 {/* Timeline node icon */}
                 <div className="absolute -left-[35px] sm:-left-[51px] top-1.5 w-6 h-6 rounded-full bg-white border-4 border-[#FF6400] shadow-sm flex items-center justify-center group-hover:scale-125 transition-transform" />
 
-                <div className="bg-white rounded-[24px] p-6 sm:p-8 border border-black/[0.06] shadow-[0_8px_30px_-10px_rgba(0,0,0,0.04)] hover:shadow-[0_16px_40px_-12px_rgba(0,0,0,0.08)] transition-all duration-300">
+                <div className="bg-white rounded-[24px] p-6 sm:p-8 border border-black/[0.06] shadow-[0_8px_30px_-10px_rgba(0,0,0,0.04)] hover:shadow-[0_16px_40px_-12px_rgba(0,0,0,0.08)] hover:-translate-y-1 transition-all duration-300">
                   {/* Period badge & current pill */}
                   <div className="flex items-center gap-3 mb-3">
                     <span className="px-3 py-1 rounded-full bg-[#FFF0E6] text-[#FF6400] text-xs font-bold font-mono">

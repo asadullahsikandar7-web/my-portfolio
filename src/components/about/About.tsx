@@ -30,13 +30,15 @@ export function About() {
           }}
         />
       </div>
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#FF6400]/[0.07] rounded-full blur-3xl pointer-events-none -z-0 translate-x-1/3 -translate-y-1/3" />
 
       <div className="max-w-7xl mx-auto px-6 sm:px-8 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
           {/* Left Column: Bio & Metrics */}
           <div className="lg:col-span-6 xl:col-span-7 flex flex-col justify-center">
             {/* Subtitle */}
-            <span className="text-sm sm:text-base font-bold tracking-[0.25em] text-[#888888] uppercase mb-3 block">
+            <span className="inline-flex items-center gap-2 text-sm sm:text-base font-bold tracking-[0.25em] text-[#888888] uppercase mb-3">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#FF6400] animate-pulse" />
               HELLO
             </span>
 

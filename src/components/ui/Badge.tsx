@@ -8,9 +8,9 @@ export function Badge({
   variant?: "default" | "accent" | "outline";
 }) {
   const styles: Record<string, string> = {
-    default: "bg-surface text-text-muted border-border",
-    accent: "bg-accent-soft text-accent border-transparent",
-    outline: "bg-transparent text-text-muted border-border-strong",
+    default: "bg-white/10 text-white/70 border-white/10",
+    accent: "bg-[#FF6400]/15 text-[#FF9152] border-transparent",
+    outline: "bg-transparent text-white/70 border-white/20",
   };
 
   return (

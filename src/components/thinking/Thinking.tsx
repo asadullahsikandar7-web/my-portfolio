@@ -4,11 +4,13 @@ import { GsapScrollCard, LetterPullUp } from "../ui/MagicText";
 
 export function Thinking() {
   return (
-    <section id="thinking" className="py-24 sm:py-32 bg-[#F5EFEB] scroll-mt-20">
-      <div className="max-w-6xl mx-auto px-6 sm:px-8">
+    <section id="thinking" className="relative py-24 sm:py-32 bg-[#F5EFEB] scroll-mt-20 overflow-hidden">
+      <div className="absolute bottom-0 right-0 translate-x-1/3 translate-y-1/3 w-[500px] h-[500px] bg-[#FF6400]/[0.04] rounded-full blur-3xl pointer-events-none" />
+      <div className="max-w-6xl mx-auto px-6 sm:px-8 relative">
         {/* Section Header */}
         <div className="text-center max-w-2xl mx-auto mb-16">
-          <span className="text-xs sm:text-sm font-bold tracking-[0.25em] text-[#FF6400] uppercase mb-2 block">
+          <span className="inline-flex items-center gap-2 text-xs sm:text-sm font-bold tracking-[0.25em] text-[#FF6400] uppercase mb-2">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#FF6400] animate-pulse" />
             ARTICLES &amp; THOUGHTS
           </span>
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-[#121212] tracking-tight uppercase font-display mb-4">

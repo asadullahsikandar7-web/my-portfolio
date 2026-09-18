@@ -126,6 +126,34 @@ html.lenis, html.lenis body {
   box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.08);
 }
 
+/* Button Shine Sweep (on hover) */
+.btn-shine {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-shine::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -75%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+    115deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.25) 50%,
+    transparent 100%
+  );
+  transform: skewX(-20deg);
+  transition: left 0.6s ease;
+  pointer-events: none;
+}
+
+.btn-shine:hover::before {
+  left: 125%;
+}
+
 /* Custom Scrollbar */
 ::-webkit-scrollbar {
   width: 8px;

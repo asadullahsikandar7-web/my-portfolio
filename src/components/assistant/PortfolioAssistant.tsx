@@ -1,6 +1,6 @@
 import { useState, type FormEvent } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { Sparkles, X, Send } from "lucide-react";
+import { Bot, X, Send } from "lucide-react";
 import { askPortfolioAssistant, SAMPLE_QUESTIONS } from "../../lib/portfolioAssistant";
 
 export function PortfolioAssistant() {
@@ -29,10 +29,10 @@ export function PortfolioAssistant() {
         transition={{ delay: 1 }}
         aria-label={open ? "Close portfolio assistant" : "Ask Asad's Portfolio AI"}
         aria-expanded={open}
-        className="fixed bottom-6 right-6 z-40 flex h-12 items-center gap-2 rounded-full border border-white/20 bg-[#141414] px-4 py-2.5 text-xs font-bold uppercase tracking-wider text-white shadow-2xl hover:border-[#FF6400] hover:scale-105 active:scale-95 transition-all duration-200 cursor-pointer"
+        className="fixed bottom-5 right-5 sm:bottom-6 sm:right-6 z-40 flex h-12 w-12 sm:w-auto items-center justify-center gap-2 rounded-full border border-white/20 bg-[#141414] px-0 sm:px-4 py-2.5 text-xs font-bold uppercase tracking-wider text-white shadow-2xl hover:border-[#FF6400] hover:scale-105 active:scale-95 transition-all duration-200 cursor-pointer"
       >
-        <Sparkles size={15} className="text-[#FF6400]" />
-        <span>Ask Asad's AI</span>
+        <Bot size={16} className="text-[#FF6400]" />
+        <span className="hidden sm:inline">Ask Asad's AI</span>
       </motion.button>
 
       <AnimatePresence>
@@ -44,12 +44,12 @@ export function PortfolioAssistant() {
             transition={{ duration: 0.2 }}
             role="dialog"
             aria-label="Ask Asad's Portfolio AI"
-            className="fixed bottom-22 right-6 z-40 w-[calc(100vw-3rem)] max-w-sm rounded-[24px] border border-white/10 bg-[#1C1C1E] p-5 shadow-2xl text-white"
+            className="fixed bottom-20 right-5 sm:bottom-22 sm:right-6 z-40 w-[calc(100vw-2.5rem)] sm:w-full max-w-sm rounded-[24px] border border-white/10 bg-[#1C1C1E] p-5 shadow-2xl text-white"
           >
             <div className="flex items-center justify-between pb-3 border-b border-white/10">
               <div className="flex items-center gap-2">
                 <div className="w-6 h-6 rounded-md bg-[#FF6400] flex items-center justify-center text-white">
-                  <Sparkles size={13} />
+                  <Bot size={13} />
                 </div>
                 <h3 className="text-sm font-bold text-white">Asad's Portfolio AI</h3>
               </div>

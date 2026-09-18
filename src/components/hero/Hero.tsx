@@ -31,10 +31,10 @@ export function Hero() {
 
       {/* Main Hero Visual Composition */}
       <div className="relative flex-1 flex flex-col items-center justify-center max-w-7xl mx-auto px-4 sm:px-6 w-full min-h-[580px] sm:min-h-[660px] md:min-h-[720px]">
-        {/* Layer 1: Geometric Orange Asterisk Graphic (BEHIND the text layer at z-5) */}
+        {/* Layer 1: Geometric Orange Graduation Cap Graphic (BEHIND the text layer at z-5) */}
         <motion.div
           initial={{ scale: 0, rotate: -30, opacity: 0 }}
-          animate={{ scale: 1, rotate: 15, opacity: 1 }}
+          animate={{ scale: 1, rotate: -6, opacity: 1 }}
           transition={{ duration: 0.9, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
           className="absolute left-[4%] sm:left-[8%] md:left-[12%] lg:left-[16%] bottom-[8%] sm:bottom-[12%] z-5 pointer-events-none"
         >
@@ -43,35 +43,17 @@ export function Hero() {
             fill="none"
             className="w-48 h-48 sm:w-60 sm:h-60 md:w-72 md:h-72 text-[#FF6400] drop-shadow-sm"
           >
-            <g transform="translate(100, 100) rotate(15)">
-              <rect x="-14" y="-85" width="28" height="170" rx="14" fill="currentColor" />
-              <rect
-                x="-14"
-                y="-85"
-                width="28"
-                height="170"
-                rx="14"
-                fill="currentColor"
-                transform="rotate(45)"
-              />
-              <rect
-                x="-14"
-                y="-85"
-                width="28"
-                height="170"
-                rx="14"
-                fill="currentColor"
-                transform="rotate(90)"
-              />
-              <rect
-                x="-14"
-                y="-85"
-                width="28"
-                height="170"
-                rx="14"
-                fill="currentColor"
-                transform="rotate(135)"
-              />
+            <g transform="translate(100, 105) rotate(-6)">
+              {/* Rounded head/cap dome, partly hidden beneath the board */}
+              <rect x="-34" y="-8" width="68" height="46" rx="21" fill="currentColor" />
+              {/* Mortarboard flat top */}
+              <polygon points="0,-40 92,-10 0,20 -92,-10" fill="currentColor" />
+              {/* Center button */}
+              <circle cx="0" cy="-10" r="8" fill="currentColor" />
+              {/* Tassel string, hanging straight from the left corner */}
+              <rect x="-96" y="-10" width="9" height="58" rx="4.5" fill="currentColor" />
+              {/* Tassel tuft */}
+              <circle cx="-91.5" cy="56" r="12" fill="currentColor" />
             </g>
           </svg>
         </motion.div>
@@ -83,14 +65,14 @@ export function Hero() {
             initial={{ opacity: 0, y: 25 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            className="w-full text-center font-display font-extrabold uppercase tracking-tighter text-[clamp(2.3rem,7.8vw,7.4rem)] leading-[0.88] flex items-center justify-center"
+            className="w-full text-center font-display font-extrabold uppercase tracking-tighter text-[clamp(1.6rem,7.8vw,7.4rem)] leading-[0.88] flex flex-wrap items-center justify-center"
           >
             {/* Left Solid Black Text */}
-            <span className="text-[#121212] z-10">I'M AN&nbsp;</span>
+            <span className="text-[#121212] z-10 whitespace-nowrap">I'M AN&nbsp;</span>
 
             {/* Middle White Dotted/Outline Text across head & neck */}
             <span
-              className="z-30 text-transparent relative inline-block"
+              className="z-30 text-transparent relative inline-block whitespace-nowrap"
               style={{
                 WebkitTextStroke: "1.8px #FFFFFF",
                 filter: "drop-shadow(0 2px 6px rgba(0,0,0,0.55))",
@@ -100,7 +82,7 @@ export function Hero() {
             </span>
 
             {/* Right Solid Black Text */}
-            <span className="text-[#121212] z-10">HUSIAST</span>
+            <span className="text-[#121212] z-10 whitespace-nowrap">HUSIAST</span>
           </motion.h1>
 
           {/* Bottom Line: & D (solid black, z-10 on top of orange star) + EVELO (white outline, z-30 over chest) + PER (solid black, z-10) */}
@@ -108,14 +90,14 @@ export function Hero() {
             initial={{ opacity: 0, y: 35 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
-            className="w-full text-center font-display font-extrabold uppercase tracking-tighter text-[clamp(2.7rem,9.6vw,9.2rem)] leading-[0.88] mt-2 sm:mt-4 flex items-center justify-center"
+            className="w-full text-center font-display font-extrabold uppercase tracking-tighter text-[clamp(1.9rem,9.6vw,9.2rem)] leading-[0.88] mt-2 sm:mt-4 flex flex-wrap items-center justify-center"
           >
             {/* Left Solid Black Text (sits ON TOP of the orange star at z-10) */}
-            <span className="text-[#121212] z-10">&amp;&nbsp;D</span>
+            <span className="text-[#121212] z-10 whitespace-nowrap">&amp;&nbsp;D</span>
 
             {/* Middle White Dotted/Outline Text across dark polo shirt */}
             <span
-              className="z-30 text-transparent relative inline-block"
+              className="z-30 text-transparent relative inline-block whitespace-nowrap"
               style={{
                 WebkitTextStroke: "1.8px #FFFFFF",
                 filter: "drop-shadow(0 2px 8px rgba(0,0,0,0.55))",
@@ -125,7 +107,7 @@ export function Hero() {
             </span>
 
             {/* Right Solid Black Text */}
-            <span className="text-[#121212] z-10">PER</span>
+            <span className="text-[#121212] z-10 whitespace-nowrap">PER</span>
           </motion.div>
         </div>
 

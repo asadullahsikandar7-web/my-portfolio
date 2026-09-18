@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { AnimatePresence, motion } from "framer-motion";
 import { Menu, X, ChevronDown, Download } from "lucide-react";
 import { getLenis } from "../../lib/lenis";
 import { social } from "../../data/social";
+import { useActiveSection } from "../../hooks/useActiveSection";
 
 const NAV_LINKS = [
   { label: "HOME", href: "#home", hasDropdown: false },
@@ -13,9 +15,12 @@ const NAV_LINKS = [
   { label: "CONTACT", href: "#contact", hasDropdown: false },
 ];
 
+const SECTION_IDS = NAV_LINKS.map((link) => link.href.replace("#", ""));
+
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const activeSection = useActiveSection(SECTION_IDS);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -62,37 +67,49 @@ export function Navbar() {
             <span className="w-full h-full bg-[#FF6400] rounded-sm" />
           </div>
           <span className="text-xl font-extrabold tracking-tight text-[#121212] font-display">
-            Asadullah Sidandar
+            Asadullah Sikandar
           </span>
         </Link>
 
         {/* Center Desktop Navigation */}
-        <nav className="hidden md:flex items-center gap-8">
-          {NAV_LINKS.map((link) => (
-            <a
-              key={link.label}
-              href={link.href}
-              onClick={(e) => handleScrollTo(e, link.href)}
-              className="text-[13px] font-bold tracking-wider text-[#333333] hover:text-[#FF6400] transition-colors flex items-center gap-1 group py-1"
-            >
-              <span>{link.label}</span>
-              {link.hasDropdown && (
-                <ChevronDown
-                  size={13}
-                  className="transition-transform duration-200 group-hover:rotate-180 opacity-60"
-                />
-              )}
-            </a>
-          ))}
+        <nav className="hidden lg:flex items-center gap-6 xl:gap-8">
+          {NAV_LINKS.map((link) => {
+            const isActive = activeSection === link.href.replace("#", "");
+            return (
+              <a
+                key={link.label}
+                href={link.href}
+                onClick={(e) => handleScrollTo(e, link.href)}
+                className={`relative text-[13px] font-bold tracking-wider transition-colors flex items-center gap-1 group py-1 ${
+                  isActive ? "text-[#FF6400]" : "text-[#333333] hover:text-[#FF6400]"
+                }`}
+              >
+                <span>{link.label}</span>
+                {link.hasDropdown && (
+                  <ChevronDown
+                    size={13}
+                    className="transition-transform duration-200 group-hover:rotate-180 opacity-60"
+                  />
+                )}
+                {isActive && (
+                  <motion.span
+                    layoutId="navbar-active-dot"
+                    className="absolute -bottom-1.5 left-1/2 h-1 w-1 -translate-x-1/2 rounded-full bg-[#FF6400]"
+                    transition={{ type: "spring", stiffness: 400, damping: 30 }}
+                  />
+                )}
+              </a>
+            );
+          })}
         </nav>
 
         {/* Right CTA Button */}
-        <div className="hidden md:flex items-center gap-4">
+        <div className="hidden lg:flex items-center gap-4">
           <a
             href={social.resumeUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-full bg-[#121212] text-white text-[13px] font-bold tracking-wider uppercase hover:bg-[#FF6400] transition-colors duration-300 shadow-sm hover:shadow-md hover:shadow-orange-500/20 active:scale-95"
+            className="btn-shine inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-full bg-[#121212] text-white text-[13px] font-bold tracking-wider uppercase hover:bg-[#FF6400] transition-colors duration-300 shadow-sm hover:shadow-md hover:shadow-orange-500/20 active:scale-95"
           >
             <Download size={14} className="stroke-[2.5]" />
             DOWNLOAD CV
@@ -103,7 +120,7 @@ export function Navbar() {
         <button
           type="button"
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          className="md:hidden p-2 text-[#121212] hover:text-[#FF6400] transition-colors"
+          className="lg:hidden p-2 text-[#121212] hover:text-[#FF6400] transition-colors"
           aria-label="Toggle Navigation Menu"
         >
           {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
@@ -111,31 +128,44 @@ export function Navbar() {
       </div>
 
       {/* Mobile Drawer */}
-      {mobileMenuOpen && (
-        <div className="md:hidden fixed inset-x-0 top-[60px] bg-[#F5EFEB] border-b border-black/10 px-6 py-6 shadow-xl flex flex-col gap-4 animate-in fade-in slide-in-from-top-2">
-          {NAV_LINKS.map((link) => (
-            <a
-              key={link.label}
-              href={link.href}
-              onClick={(e) => handleScrollTo(e, link.href)}
-              className="text-base font-bold text-[#121212] hover:text-[#FF6400] transition-colors py-1.5"
-            >
-              {link.label}
-            </a>
-          ))}
-          <div className="pt-3 border-t border-black/5">
-            <a
-              href={social.resumeUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-full inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-[#121212] text-white text-sm font-bold tracking-wider uppercase hover:bg-[#FF6400] transition-colors"
-            >
-              <Download size={15} />
-              DOWNLOAD CV
-            </a>
-          </div>
-        </div>
-      )}
+      <AnimatePresence>
+        {mobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -12 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -12 }}
+            transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+            className="lg:hidden fixed inset-x-0 top-[60px] bg-[#F5EFEB]/95 backdrop-blur-md border-b border-black/10 px-6 py-6 shadow-xl flex flex-col gap-4"
+          >
+            {NAV_LINKS.map((link) => {
+              const isActive = activeSection === link.href.replace("#", "");
+              return (
+                <a
+                  key={link.label}
+                  href={link.href}
+                  onClick={(e) => handleScrollTo(e, link.href)}
+                  className={`text-base font-bold transition-colors py-1.5 ${
+                    isActive ? "text-[#FF6400]" : "text-[#121212] hover:text-[#FF6400]"
+                  }`}
+                >
+                  {link.label}
+                </a>
+              );
+            })}
+            <div className="pt-3 border-t border-black/5">
+              <a
+                href={social.resumeUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-[#121212] text-white text-sm font-bold tracking-wider uppercase hover:bg-[#FF6400] transition-colors"
+              >
+                <Download size={15} />
+                DOWNLOAD CV
+              </a>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </header>
   );
 }

@@ -52,10 +52,12 @@ function SkillPill({ skill }: { skill: Skill }) {
 
 export function Skills() {
   return (
-    <section id="skills" className="py-24 sm:py-32 bg-[#F5EFEB] scroll-mt-20">
-      <div className="max-w-7xl mx-auto px-6 sm:px-8">
+    <section id="skills" className="relative py-24 sm:py-32 bg-[#F5EFEB] scroll-mt-20 overflow-hidden">
+      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/3 w-[600px] h-[600px] bg-[#FF6400]/[0.04] rounded-full blur-3xl pointer-events-none" />
+      <div className="max-w-7xl mx-auto px-6 sm:px-8 relative">
         <div className="text-center max-w-2xl mx-auto mb-16">
-          <span className="text-xs sm:text-sm font-bold tracking-[0.25em] text-[#FF6400] uppercase mb-2 block">
+          <span className="inline-flex items-center gap-2 text-xs sm:text-sm font-bold tracking-[0.25em] text-[#FF6400] uppercase mb-2">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#FF6400] animate-pulse" />
             TECH STACK &amp; CAPABILITIES
           </span>
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-[#121212] tracking-tight uppercase font-display mb-4">
@@ -70,7 +72,7 @@ export function Skills() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
           {skillGroups.map((group, i) => (
             <GsapScrollCard key={group.id} delay={i * 0.08}>
-              <div className="bg-white rounded-[24px] p-6 sm:p-8 border border-black/[0.06] shadow-[0_8px_30px_-10px_rgba(0,0,0,0.04)] hover:shadow-[0_16px_40px_-12px_rgba(0,0,0,0.08)] transition-all duration-300 h-full flex flex-col justify-between">
+              <div className="bg-white rounded-[24px] p-6 sm:p-8 border border-black/[0.06] shadow-[0_8px_30px_-10px_rgba(0,0,0,0.04)] hover:shadow-[0_16px_40px_-12px_rgba(0,0,0,0.08)] hover:-translate-y-1.5 transition-all duration-300 h-full flex flex-col justify-between">
                 <div>
                   <div className="flex items-center gap-2 mb-4">
                     <span className="w-2 h-2 rounded-full bg-[#FF6400]" />

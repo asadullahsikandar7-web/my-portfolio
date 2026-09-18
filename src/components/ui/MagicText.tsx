@@ -13,7 +13,11 @@ interface LetterPullUpProps {
 }
 
 export function LetterPullUp({ words, delay = 0.04, className = "" }: LetterPullUpProps) {
-  const letters = words.split("");
+  const wordList = words.split(" ");
+  const wordStartIndices = wordList.reduce<number[]>((acc, _word, wIdx) => {
+    acc.push(wIdx === 0 ? 0 : acc[wIdx - 1] + wordList[wIdx - 1].length);
+    return acc;
+  }, []);
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-20px" });
 
@@ -32,17 +36,24 @@ export function LetterPullUp({ words, delay = 0.04, className = "" }: LetterPull
 
   return (
     <span ref={ref} className={`inline-flex flex-wrap ${className}`}>
-      {letters.map((letter, i) => (
-        <motion.span
-          key={i}
-          variants={pullupVariant}
-          initial="initial"
-          animate={isInView ? "animate" : "initial"}
-          custom={i}
-          className="inline-block"
-        >
-          {letter === " " ? "\u00A0" : letter}
-        </motion.span>
+      {wordList.map((word, wIdx) => (
+        <span key={wIdx} className="inline-flex whitespace-nowrap mr-[0.25em] last:mr-0">
+          {word.split("").map((letter, lIdx) => {
+            const globalIndex = wordStartIndices[wIdx] + lIdx;
+            return (
+              <motion.span
+                key={lIdx}
+                variants={pullupVariant}
+                initial="initial"
+                animate={isInView ? "animate" : "initial"}
+                custom={globalIndex}
+                className="inline-block"
+              >
+                {letter}
+              </motion.span>
+            );
+          })}
+        </span>
       ))}
     </span>
   );

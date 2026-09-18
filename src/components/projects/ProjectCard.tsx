@@ -199,7 +199,7 @@ export function ProjectCard({ project, reverse = false }: ProjectCardProps) {
             <div className="flex items-center gap-4 pt-1">
               <Link
                 to={`/work/${project.slug}`}
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#121212] text-white text-xs font-bold tracking-wider uppercase hover:bg-[#FF6400] transition-colors duration-300"
+                className="btn-shine inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#121212] text-white text-xs font-bold tracking-wider uppercase hover:bg-[#FF6400] transition-colors duration-300"
               >
                 <span>View Case Study</span>
                 <ArrowUpRight size={14} className="stroke-[2.5]" />
